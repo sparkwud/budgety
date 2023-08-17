@@ -9,11 +9,11 @@ class Expense {
   const Expense(this.amount, this.color);
 }
 
-class ExpenseBar extends CustomPainter {
+class _ExpenseBar extends CustomPainter {
   final List<Expense> expenseData;
   final double totalBudget;
 
-  ExpenseBar({required this.expenseData, required this.totalBudget});
+  _ExpenseBar({required this.expenseData, required this.totalBudget});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -53,5 +53,21 @@ class ExpenseBar extends CustomPainter {
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
 }
 
+class ExpenseBar extends StatelessWidget {
+  final List<Expense> expenseData;
+  final double totalBudget;
 
+  const ExpenseBar({super.key, required this.expenseData, required this.totalBudget});
 
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return CustomPaint(
+          size: Size(constraints.maxWidth , 10),
+          painter: _ExpenseBar(expenseData: expenseData, totalBudget: totalBudget),
+        );
+      },
+    );
+  }
+}
