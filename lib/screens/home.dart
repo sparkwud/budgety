@@ -13,21 +13,19 @@ class Home extends StatelessWidget {
         body: const Column(
           children: [
             Padding(
-              padding: EdgeInsets.all(8.0),
-              child: SizedBox(
-                width: 200,
-                child: ExpenseBar(
+              padding: EdgeInsets.all(20.0),
+              child: ExpenseBar(
                   expenseData: [
-                    Expense(30000.00, Colors.amberAccent),
+                    Expense(2000.00, Colors.amberAccent),
                     Expense(40000.00, Colors.greenAccent),
                     Expense(300000.00, Colors.indigoAccent),
-                    Expense(80000.00, Colors.blueAccent),
+                    // Expense(80000.00, Colors.blueAccent),
                   ],
-                  totalBudget: 300000,
-                ),
+                totalBudget: 00.00,
               ),
             ),
           ],
-        ));
+        )
+    );
   }
 }

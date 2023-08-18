@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 
@@ -25,12 +28,15 @@ class _ExpenseBar extends CustomPainter {
     final rRect = RRect.fromRectAndRadius(rect, cornerRadius);
     canvas.drawRRect(rRect, paint);
 
-    var lastIndex = expenseData.length - 1;
     var totalWidthDrawn = 0.0;
+    var lastIndex = expenseData.length - 1;
+    final totalExpense = expenseData.fold(0.00, (previousValue, element) => previousValue + element.amount);
 
     void drawBar(int index, Expense element) {
       final paint = Paint()..color = element.color;
-      final currentBarWidth = element.amount * size.width / totalBudget;
+      final widthToUse = max(totalExpense, totalBudget);
+      final currentBarWidth = element.amount * size.width / widthToUse;
+
       final rect = Rect.fromLTWH(totalWidthDrawn, 0, currentBarWidth, size.height);
       final firstRRect = RRect.fromRectAndCorners(rect, topLeft: cornerRadius, bottomLeft: cornerRadius);
       final lastRRect = RRect.fromRectAndCorners(rect, topRight: cornerRadius, bottomRight: cornerRadius);
@@ -61,6 +67,7 @@ class ExpenseBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return CustomPaint(
