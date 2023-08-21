@@ -16,12 +16,12 @@ class Home extends StatelessWidget {
               padding: EdgeInsets.all(20.0),
               child: ExpenseBar(
                   expenseData: [
-                    Expense(2000.00, Colors.amberAccent),
-                    Expense(40000.00, Colors.greenAccent),
-                    Expense(300000.00, Colors.indigoAccent),
-                    // Expense(80000.00, Colors.blueAccent),
+                    Expense(100000.00, Colors.amberAccent),
+                    Expense(20000.00, Colors.greenAccent),
+                    Expense(30000.00, Colors.indigoAccent),
+                    Expense(20000.00, Colors.blueAccent),
                   ],
-                totalBudget: 00.00,
+                totalBudget: 150000.00,
               ),
             ),
           ],

@@ -34,8 +34,8 @@ class _ExpenseBar extends CustomPainter {
 
     void drawBar(int index, Expense element) {
       final paint = Paint()..color = element.color;
-      final widthToUse = max(totalExpense, totalBudget);
-      final currentBarWidth = element.amount * size.width / widthToUse;
+      final amountToUse = max(totalExpense, totalBudget);
+      final currentBarWidth = element.amount * size.width / amountToUse;
 
       final rect = Rect.fromLTWH(totalWidthDrawn, 0, currentBarWidth, size.height);
       final firstRRect = RRect.fromRectAndCorners(rect, topLeft: cornerRadius, bottomLeft: cornerRadius);
@@ -52,7 +52,17 @@ class _ExpenseBar extends CustomPainter {
       }
     }
 
+    void drawOverdraftIndicator() {
+      final paint = Paint()..color = Colors.redAccent;
+      final left = totalBudget * size.width / totalExpense;
+      final ovdHeight = size.height + 4;
+      final ovdRect = Rect.fromLTWH(left, -2, 2, ovdHeight);
+      canvas.drawRect(ovdRect, paint);
+    }
+
+    //draw overdraftIndicator
     expenseData.forEachIndexed(drawBar);
+    if (totalExpense > totalBudget) drawOverdraftIndicator();
   }
 
   @override
@@ -71,7 +81,7 @@ class ExpenseBar extends StatelessWidget {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         return CustomPaint(
-          size: Size(constraints.maxWidth , 10),
+          size: Size(constraints.maxWidth, 10),
           painter: _ExpenseBar(expenseData: expenseData, totalBudget: totalBudget),
         );
       },
