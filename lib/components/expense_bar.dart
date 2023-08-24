@@ -12,11 +12,11 @@ class Expense {
   const Expense(this.amount, this.color);
 }
 
-class _ExpenseBar extends CustomPainter {
+class _ExpenseBarPainter extends CustomPainter {
   final List<Expense> expenseData;
   final double totalBudget;
 
-  _ExpenseBar({required this.expenseData, required this.totalBudget});
+  _ExpenseBarPainter({required this.expenseData, required this.totalBudget});
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -30,16 +30,20 @@ class _ExpenseBar extends CustomPainter {
 
     var totalWidthDrawn = 0.0;
     var lastIndex = expenseData.length - 1;
-    final totalExpense = expenseData.fold(0.00, (previousValue, element) => previousValue + element.amount);
+    final totalExpense = expenseData.fold(
+        0.00, (previousValue, element) => previousValue + element.amount);
 
     void drawBar(int index, Expense element) {
       final paint = Paint()..color = element.color;
       final amountToUse = max(totalExpense, totalBudget);
       final currentBarWidth = element.amount * size.width / amountToUse;
 
-      final rect = Rect.fromLTWH(totalWidthDrawn, 0, currentBarWidth, size.height);
-      final firstRRect = RRect.fromRectAndCorners(rect, topLeft: cornerRadius, bottomLeft: cornerRadius);
-      final lastRRect = RRect.fromRectAndCorners(rect, topRight: cornerRadius, bottomRight: cornerRadius);
+      final rect =
+          Rect.fromLTWH(totalWidthDrawn, 0, currentBarWidth, size.height);
+      final firstRRect = RRect.fromRectAndCorners(rect,
+          topLeft: cornerRadius, bottomLeft: cornerRadius);
+      final lastRRect = RRect.fromRectAndCorners(rect,
+          topRight: cornerRadius, bottomRight: cornerRadius);
 
       totalWidthDrawn += currentBarWidth;
 
@@ -73,7 +77,8 @@ class ExpenseBar extends StatelessWidget {
   final List<Expense> expenseData;
   final double totalBudget;
 
-  const ExpenseBar({super.key, required this.expenseData, required this.totalBudget});
+  const ExpenseBar(
+      {super.key, required this.expenseData, required this.totalBudget});
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +87,8 @@ class ExpenseBar extends StatelessWidget {
       builder: (BuildContext context, BoxConstraints constraints) {
         return CustomPaint(
           size: Size(constraints.maxWidth, 10),
-          painter: _ExpenseBar(expenseData: expenseData, totalBudget: totalBudget),
+          painter: _ExpenseBarPainter(
+              expenseData: expenseData, totalBudget: totalBudget),
         );
       },
     );
