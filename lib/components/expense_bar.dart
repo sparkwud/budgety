@@ -1,9 +1,6 @@
-import 'dart:math';
-
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
+import 'dart:math';
 
 class Expense {
   final double amount;
@@ -12,6 +9,29 @@ class Expense {
   const Expense(this.amount, this.color);
 }
 
+class ExpenseBar extends StatelessWidget {
+  final List<Expense> expenseData;
+  final double totalBudget;
+
+  const ExpenseBar(
+      {super.key, required this.expenseData, required this.totalBudget});
+
+  @override
+  Widget build(BuildContext context) {
+    // final screenWidth = MediaQuery.sizeOf(context).width;
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return CustomPaint(
+          size: Size(constraints.maxWidth, 10),
+          painter: _ExpenseBarPainter(
+              expenseData: expenseData, totalBudget: totalBudget),
+        );
+      },
+    );
+  }
+}
+
+// expense bar painter
 class _ExpenseBarPainter extends CustomPainter {
   final List<Expense> expenseData;
   final double totalBudget;
@@ -71,26 +91,4 @@ class _ExpenseBarPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
-class ExpenseBar extends StatelessWidget {
-  final List<Expense> expenseData;
-  final double totalBudget;
-
-  const ExpenseBar(
-      {super.key, required this.expenseData, required this.totalBudget});
-
-  @override
-  Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.sizeOf(context).width;
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        return CustomPaint(
-          size: Size(constraints.maxWidth, 10),
-          painter: _ExpenseBarPainter(
-              expenseData: expenseData, totalBudget: totalBudget),
-        );
-      },
-    );
-  }
 }
