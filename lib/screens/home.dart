@@ -3,7 +3,7 @@
 // import 'dart:ffi';
 
 import 'package:budgety/components/add_expense_button.dart';
-import 'package:budgety/components/add_expense_text_field.dart';
+import 'package:budgety/components/expense_text_field.dart';
 import 'package:budgety/components/expense_type_dropdown.dart';
 import 'package:budgety/components/expense_bar.dart';
 import 'package:flutter/material.dart';
